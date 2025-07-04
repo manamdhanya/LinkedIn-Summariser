@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile</title>
+</head>
+<style>
+    html,
+    body {
+        height: 100%;
+        margin: 0;
+        padding: 0;
+        overflow-x: hidden;
+    }
+
+    button {
+        cursor: pointer;
+    }
+</style>
+<script>
+
+</script>
+
+<body class="min-h-screen bg-gradient-to-br from-blue-600 via-blue-500 to-indigo-600 flex flex-col">
+    <nav class="bg-white border-gray-200">
+        <div class="flex items-center justify-between p-4">
+            <a href="HomePage">
+                <img class="h-16 w-auto"
+                    src="https://pbs.twimg.com/profile_images/1562414089460400130/4mOW-9q3_400x400.jpg"
+                    alt="company logo">
+            </a>
+
+        </div>
+    </nav>
+
+
+    <div class="max-w-3xl mx-auto my-12 bg-white rounded-2xl shadow-lg p-[6rem]">
+        <div class="flex flex-col items-center text-center">
+            <img src="<%= imageUrl %>" alt="User avatar"
+                class="w-32 h-32 rounded-full border-4 border-indigo-300 shadow mb-4" />
+
+
+            <h2 class="text-2xl font-bold text-gray-800 mb-1">
+                <%= FirstName %>
+                    <%= LastName %>
+            </h2>
+            <p class="text-sm text-gray-600 mb-6">
+                <%= designation %> – <%= department %>
+            </p>
+
+
+            <div class="w-full mt-6  text-gray-800">
+                <div class="grid grid-cols-2 gap-4">
+                    <span class="font-medium text-right pr-[7rem]">First Name:</span>
+                    <span>
+                        <%= FirstName %>
+                    </span>
+
+
+                    <span class="font-medium text-right pr-[7rem]">Last Name:</span>
+                    <span>
+                        <%= LastName %>
+                    </span>
+
+
+                    <span class="font-medium text-right pr-[7rem]">Email:</span>
+                    <span class="break-words">
+                        <%= email %>
+                    </span>
+
+
+                    <span class="font-medium text-right pr-[7rem]">Designation:</span>
+                    <span>
+                        <%= designation %>
+                    </span>
+
+
+                    <span class="font-medium text-right pr-[7rem]">Department:</span>
+                    <span>
+                        <%= department %>
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

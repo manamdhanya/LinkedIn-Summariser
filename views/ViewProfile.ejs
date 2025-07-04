@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>View Profile</title>
+</head>
+<style>
+    html,
+    body {
+        height: 100%;
+        margin: 0;
+        padding: 0;
+        overflow-x: hidden;
+    }
+
+    button {
+        cursor: pointer;
+    }
+</style>
+
+<body class="min-h-screen bg-gradient-to-br from-blue-600 via-blue-500 to-indigo-600 flex flex-col">
+    <nav class="bg-white border-gray-200">
+        <div class="flex items-center justify-between p-4">
+            <a href="/HomePage">
+                <img class="h-16 w-auto"
+                    src="https://pbs.twimg.com/profile_images/1562414089460400130/4mOW-9q3_400x400.jpg"
+                    alt="company logo">
+            </a>
+
+            <div class="flex items-center space-x-6">
+                <div class="relative top-[-1.2rem] left-6">
+                    <div class="absolute">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="36" height="36"
+                            fill="currentColor" class="px-2" id="search-icon">
+                            <path
+                                d="M505 442.7L405.3 343c-4.5-4.5-10.6-7-17-7H372c27.6-35.3 44-79.7 44-128C416 93.1 322.9 0 208 0S0 93.1 0 208s93.1 208 208 208c48.3 0 92.7-16.4 128-44v16.3c0 6.4 2.5 12.5 7 17l99.7 99.7c9.4 9.4 24.6 9.4 33.9 0l28.3-28.3c9.4-9.4 9.4-24.6 .1-34zM208 336c-70.7 0-128-57.2-128-128 0-70.7 57.2-128 128-128 70.7 0 128 57.2 128 128 0 70.7-57.2 128-128 128z" />
+                        </svg>
+                    </div>
+                </div>
+
+
+                <input type="text" placeholder="Search..."
+                    class="p-2 ps-8 text-sm  border-2 border-gray-500  rounded bg-gray-100" />
+
+
+                <button onclick="displayNotifaction()" class="focus:outline-none">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" width="30" height="30"
+                        fill="currentColor">
+                        <path
+                            d="M224 0c-17.7 0-32 14.3-32 32l0 19.2C119 66 64 130.6 64 208l0 18.8c0 47-17.3 92.4-48.5 127.6l-7.4 8.3c-8.4 9.4-10.4 22.9-5.3 34.4S19.4 416 32 416l384 0c12.6 0 24-7.4 29.2-18.9s3.1-25-5.3-34.4l-7.4-8.3C401.3 319.2 384 273.9 384 226.8l0-18.8c0-77.4-55-142-128-156.8L256 32c0-17.7-14.3-32-32-32zm45.3 493.3c12-12 18.7-28.3 18.7-45.3l-64 0-64 0c0 17 6.7 33.3 18.7 45.3s28.3 18.7 45.3 18.7s33.3-6.7 45.3-18.7z" />
+                    </svg>
+                </button>
+
+                <button onclick="display()" class="focus:outline-none">
+                    <img class="w-12 h-12 rounded-full" src="<%=imageUrl_user%>" alt="User avatar">
+                </button>
+            </div>
+        </div>
+        <div id="user-dropdown" class="absolute hidden bg-white right-4 mt-2 w-48 rounded-md shadow-lg z-[1]">
+            <div class="px-4 py-3">
+                <span class="block text-sm">
+                    <%=name_user%>
+                </span>
+                <span class="block text-sm text-gray-500 truncate">
+                    <%=email_user%>
+                </span>
+            </div>
+            <ul class="py-2">
+                <li><a href="/profile" class="block px-4 py-2 hover:bg-gray-300">Profile</a></li>
+                <li><a href="/login" class="block px-4 py-2 hover:bg-gray-300">Sign out</a></li>
+            </ul>
+        </div>
+        <div id="notification-dropdown" class="absolute hidden bg-white right-4 mt-2 w-48 rounded-md shadow-lg z-[1]">
+            <ul class="py-2">
+                <li>
+                    <p class="block px-4 py-2">Nothing!</p>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+
+    <div class="mx-auto mt-10 mb-8 max-w-4xl bg-white shadow-2xl rounded-xl p-8">
+        <div class="text-center mb-8">
+            <img src="<%= profile_pic_url %>" alt="Profile Picture"
+                class="w-32 h-32 rounded-full mx-auto border-4 border-blue-300">
+            <h2 class="mt-4 text-3xl font-bold text-gray-800">
+                <%= firstName %>
+                    <%= lastName %>
+            </h2>
+            <p class="text-gray-600 text-sm mt-2">
+                <span class="font-medium text-gray-800">Position Applied For: </span>
+                <%= position || 'Not specified' %>
+            </p>
+            <a href="<%= url %>" class="text-blue-600 hover:underline text-sm">LinkedIn Profile</a>
+        </div>
+
+
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-6">
+            <div>
+                <label class="block text-sm font-medium text-gray-700">Phone Number:</label>
+                <p class="text-gray-900 mt-1">
+                    <%= phoneNumber %>
+                </p>
+            </div>
+
+
+            <div>
+                <label class="block text-sm font-medium text-gray-700">Email:</label>
+                <p class="text-gray-900 mt-1">
+                    <%= email %>
+                </p>
+            </div>
+
+            <div>
+                <label class="block text-sm font-medium text-gray-700">Resume:</label>
+                <a href="<%= file_URL %>">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="1.7rem" height="1.7rem" fill="currentColor"
+                        class="bi bi-file-pdf ml-3 mt-[0.2rem]" viewBox="0 0 16 16">
+                        <path
+                            d="M4 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2zm0 1h8a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1" />
+                        <path
+                            d="M4.603 12.087a.8.8 0 0 1-.438-.42c-.195-.388-.13-.776.08-1.102.198-.307.526-.568.897-.787a7.7 7.7 0 0 1 1.482-.645 20 20 0 0 0 1.062-2.227 7.3 7.3 0 0 1-.43-1.295c-.086-.4-.119-.796-.046-1.136.075-.354.274-.672.65-.823.192-.077.4-.12.602-.077a.7.7 0 0 1 .477.365c.088.164.12.356.127.538.007.187-.012.395-.047.614-.084.51-.27 1.134-.52 1.794a11 11 0 0 0 .98 1.686 5.8 5.8 0 0 1 1.334.05c.364.065.734.195.96.465.12.144.193.32.2.518.007.192-.047.382-.138.563a1.04 1.04 0 0 1-.354.416.86.86 0 0 1-.51.138c-.331-.014-.654-.196-.933-.417a5.7 5.7 0 0 1-.911-.95 11.6 11.6 0 0 0-1.997.406 11.3 11.3 0 0 1-1.021 1.51c-.29.35-.608.655-.926.787a.8.8 0 0 1-.58.029m1.379-1.901q-.25.115-.459.238c-.328.194-.541.383-.647.547-.094.145-.096.25-.04.361q.016.032.026.044l.035-.012c.137-.056.355-.235.635-.572a8 8 0 0 0 .45-.606m1.64-1.33a13 13 0 0 1 1.01-.193 12 12 0 0 1-.51-.858 21 21 0 0 1-.5 1.05zm2.446.45q.226.244.435.41c.24.19.407.253.498.256a.1.1 0 0 0 .07-.015.3.3 0 0 0 .094-.125.44.44 0 0 0 .059-.2.1.1 0 0 0-.026-.063c-.052-.062-.2-.152-.518-.209a4 4 0 0 0-.612-.053zM8.078 5.8a7 7 0 0 0 .2-.828q.046-.282.038-.465a.6.6 0 0 0-.032-.198.5.5 0 0 0-.145.04c-.087.035-.158.106-.196.283-.04.192-.03.469.046.822q.036.167.09.346z" />
+                    </svg>
+                </a>
+            </div>
+        </div>
+
+
+        <div class="mt-10">
+            <h3 class="text-xl font-semibold text-gray-800 mb-3">Bio Summary</h3>
+            <ul class="list-disc list-inside space-y-1 text-gray-700">
+                <% summaryDetailed?.bio?.forEach(function(line) { %>
+                    <li>
+                        <%= line %>
+                    </li>
+                    <% }); %>
+            </ul>
+        </div>
+
+
+        <% if (summaryDetailed?.skills) { %>
+            <div class="mt-6">
+                <h3 class="text-lg font-semibold text-gray-800 mb-2">Skills</h3>
+                <div class="flex flex-wrap gap-2">
+                    <% Object.entries(summaryDetailed.skills).forEach(function([skill, value]) { %>
+                        <span class="inline-block bg-blue-100 text-blue-800 text-sm px-3 py-1 rounded-full shadow-sm">
+                            <%= skill %>
+                                <span
+                                    class="inline-flex items-center justify-center p-[0.9rem] w-4 h-4 ms-2 text-xs font-semibold text-blue-800 bg-blue-400 rounded-full">
+                                    <%= value %>
+                                </span>
+                        </span>
+                        <% }) %>
+                </div>
+            </div>
+            <% } %>
+
+
+                <% if (summaryDetailed?.experience?.length) { %>
+                    <div class="mt-6">
+                        <h3 class="text-lg font-semibold text-gray-800 mb-2">Experience</h3>
+                        <ul class="list-disc list-inside text-gray-700 space-y-1">
+                            <% summaryDetailed.experience.forEach(function(item) { %>
+                                <li>
+                                    <%= item %>
+                                </li>
+                                <% }); %>
+                        </ul>
+                    </div>
+                    <% } %>
+
+
+                        <% if (summaryDetailed?.projects?.length) { %>
+                            <div class="mt-6">
+                                <h3 class="text-lg font-semibold text-gray-800 mb-2">Projects</h3>
+                                <ul class="list-disc list-inside text-gray-700 space-y-1">
+                                    <% summaryDetailed.projects.forEach(function(project) { %>
+                                        <li>
+                                            <%= project %>
+                                        </li>
+                                        <% }); %>
+                                </ul>
+                            </div>
+                            <% } %>
+
+
+                                <% if (summaryDetailed?.education?.length) { %>
+                                    <div class="mt-6">
+                                        <h3 class="text-lg font-semibold text-gray-800 mb-2">Education</h3>
+                                        <ul class="list-disc list-inside text-gray-700 space-y-1">
+                                            <% summaryDetailed.education.forEach(function(edu) { %>
+                                                <li>
+                                                    <%= edu %>
+                                                </li>
+                                                <% }); %>
+                                        </ul>
+                                    </div>
+                                    <% } %>
+
+
+                                        <% if (summaryDetailed?.certifications?.length) { %>
+                                            <div class="mt-6">
+                                                <h3 class="text-lg font-semibold text-gray-800 mb-2">Certifications</h3>
+                                                <ul class="list-disc list-inside text-gray-700 space-y-1">
+                                                    <% summaryDetailed.certifications.forEach(function(cert) { %>
+                                                        <li>
+                                                            <%= cert %>
+                                                        </li>
+                                                        <% }); %>
+                                                </ul>
+                                            </div>
+                                            <% } %>
+
+
+                                                <% if (summaryDetailed?.achievements?.length) { %>
+                                                    <div class="mt-6">
+                                                        <h3 class="text-lg font-semibold text-gray-800 mb-2">
+                                                            Achievements</h3>
+                                                        <ul class="list-disc list-inside text-gray-700 space-y-1">
+                                                            <% summaryDetailed.achievements.forEach(function(ach) { %>
+                                                                <li>
+                                                                    <%= ach %>
+                                                                </li>
+                                                                <% }); %>
+                                                        </ul>
+                                                    </div>
+                                                    <% } %>
+
+
+                                                        <% if (summaryDetailed?.interests?.length) { %>
+                                                            <div class="mt-6">
+                                                                <h3 class="text-lg font-semibold text-gray-800 mb-2">
+                                                                    Interests</h3>
+                                                                <ul
+                                                                    class="list-disc list-inside text-gray-700 space-y-1">
+                                                                    <% summaryDetailed.interests.forEach(function(interest)
+                                                                        { %>
+                                                                        <li>
+                                                                            <%= interest %>
+                                                                        </li>
+                                                                        <% }); %>
+                                                                </ul>
+                                                            </div>
+                                                            <% } %>
+
+
+                                                                <% if (summaryDetailed?.recommendations?.length) { %>
+                                                                    <div class="mt-6">
+                                                                        <h3
+                                                                            class="text-lg font-semibold text-gray-800 mb-2">
+                                                                            Recommendations</h3>
+                                                                        <ul
+                                                                            class="list-disc list-inside text-gray-700 space-y-1">
+                                                                            <% summaryDetailed.recommendations.forEach(function(rec)
+                                                                                { %>
+                                                                                <li>
+                                                                                    <%= rec %>
+                                                                                </li>
+                                                                                <% }); %>
+                                                                        </ul>
+                                                                    </div>
+                                                                    <% } %>
+
+
+                                                                        <% if (summaryDetailed?.volunteer?.length) { %>
+                                                                            <div class="mt-6">
+                                                                                <h3
+                                                                                    class="text-lg font-semibold text-gray-800 mb-2">
+                                                                                    Volunteer Work</h3>
+                                                                                <ul
+                                                                                    class="list-disc list-inside text-gray-700 space-y-1">
+                                                                                    <% summaryDetailed.volunteer.forEach(function(vol)
+                                                                                        { %>
+                                                                                        <li>
+                                                                                            <%= vol %>
+                                                                                        </li>
+                                                                                        <% }); %>
+                                                                                </ul>
+                                                                            </div>
+                                                                            <% } %>
+    </div>
+
+
+</body>
+
+</html>
+
+<script>
+    function display() {
+        const dropdown = document.getElementById('user-dropdown')
+        dropdown.classList.toggle('hidden')
+    }
+
+
+
+
+    function displayNotifaction() {
+        const dropdown = document.getElementById('notification-dropdown')
+        dropdown.classList.toggle('hidden')
+    }
+</script>

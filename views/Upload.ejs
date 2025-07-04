@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" rel="stylesheet" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Candidate</title>
+</head>
+
+<style>
+    html,
+    body {
+        height: 100%;
+        margin: 0;
+        padding: 0;
+        overflow-x: hidden;
+    }
+
+
+    button {
+        cursor: pointer;
+    }
+</style>
+
+<body class="min-h-screen bg-gradient-to-br from-blue-600 via-blue-500 to-indigo-600 flex flex-col">
+
+    <nav class="bg-white border-gray-200">
+        <div class="flex items-center justify-between p-4">
+            <a href="HomePage">
+                <img class="h-16 w-auto"
+                    src="https://pbs.twimg.com/profile_images/1562414089460400130/4mOW-9q3_400x400.jpg"
+                    alt="company logo">
+            </a>
+
+            <div class="flex items-center space-x-6">
+
+                <div class="relative top-[-1.2rem] left-6">
+                    <div class="absolute">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="36" height="36"
+                            fill="currentColor" class="px-2" id="search-icon">
+                            <path
+                                d="M505 442.7L405.3 343c-4.5-4.5-10.6-7-17-7H372c27.6-35.3 44-79.7 44-128C416 93.1 322.9 0 208 0S0 93.1 0 208s93.1 208 208 208c48.3 0 92.7-16.4 128-44v16.3c0 6.4 2.5 12.5 7 17l99.7 99.7c9.4 9.4 24.6 9.4 33.9 0l28.3-28.3c9.4-9.4 9.4-24.6 .1-34zM208 336c-70.7 0-128-57.2-128-128 0-70.7 57.2-128 128-128 70.7 0 128 57.2 128 128 0 70.7-57.2 128-128 128z" />
+                        </svg>
+                    </div>
+                </div>
+
+                <input type="text" placeholder="Search..."
+                    class="p-2 ps-8 text-sm  border-2 border-gray-500  rounded bg-gray-100" />
+
+
+
+                <button onclick="displayNotifaction()" class="focus:outline-none">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" width="30" height="30"
+                        fill="currentColor">
+                        <path
+                            d="M224 0c-17.7 0-32 14.3-32 32l0 19.2C119 66 64 130.6 64 208l0 18.8c0 47-17.3 92.4-48.5 127.6l-7.4 8.3c-8.4 9.4-10.4 22.9-5.3 34.4S19.4 416 32 416l384 0c12.6 0 24-7.4 29.2-18.9s3.1-25-5.3-34.4l-7.4-8.3C401.3 319.2 384 273.9 384 226.8l0-18.8c0-77.4-55-142-128-156.8L256 32c0-17.7-14.3-32-32-32zm45.3 493.3c12-12 18.7-28.3 18.7-45.3l-64 0-64 0c0 17 6.7 33.3 18.7 45.3s28.3 18.7 45.3 18.7s33.3-6.7 45.3-18.7z" />
+                    </svg>
+                </button>
+
+                <button onclick="display()" class="focus:outline-none">
+                    <img class="w-12 h-12 rounded-full" src="<%=imageUrl_user%>" alt="User avatar">
+                </button>
+            </div>
+        </div>
+
+        <div id="user-dropdown" class="absolute hidden bg-white right-4 mt-2 w-48 rounded-md shadow-lg z-[1]">
+            <div class="px-4 py-3">
+                <span class="block text-sm">
+                    <%=name_user%>
+                </span>
+                <span class="block text-sm text-gray-500 truncate">
+                    <%=email_user%>
+                </span>
+            </div>
+            <ul class="py-2">
+                <li><a href="profile" class="block px-4 py-2 hover:bg-gray-300">Profile</a></li>
+                <li><a href="Login" class="block px-4 py-2 hover:bg-gray-300">Sign out</a></li>
+            </ul>
+        </div>
+
+        <div id="notification-dropdown" class="absolute hidden bg-white right-4 mt-2 w-48 rounded-md shadow-lg z-[1]">
+            <ul class="py-2">
+                <li>
+                    <p class="block px-4 py-2">Nothing!</p>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <% if (typeof error !=='undefined' && error) { %>
+        <div class="flex items-start max-w-sm mx-auto mt-4 p-4 bg-red-100 border border-red-400 text-red-700 rounded-md shadow-sm"
+            role="alert">
+            <div class="flex-shrink-0">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="30" height="30"
+                    fill="currentColor">
+                    <path
+                        d="M256 32c14.2 0 27.3 7.5 34.5 19.8l216 368c7.3 12.4 7.3 27.7 .2 40.1S486.3 480 472 480L40 480c-14.3 0-27.6-7.7-34.7-20.1s-7-27.8 .2-40.1l216-368C228.7 39.5 241.8 32 256 32zm0 128c-13.3 0-24 10.7-24 24l0 112c0 13.3 10.7 24 24 24s24-10.7 24-24l0-112c0-13.3-10.7-24-24-24zm32 224a32 32 0 1 0 -64 0 32 32 0 1 0 64 0z" />
+                </svg>
+            </div>
+            <div class="ml-3  mt-1 text-sm font-medium">
+                <%= message %>
+            </div>
+        </div>
+        <% } %>
+
+            <div class="flex-grow flex items-center justify-center px-4 py-8">
+                <div
+                    class="w-full h-[30rem] max-w-lg bg-white bg-opacity-30 backdrop-blur-md rounded-3xl shadow-2xl border border-white/20 p-6 sm:p-8">
+                    <h2 class="text-xl sm:text-2xl font-semibold text-[#0a2c4d] text-center mb-6">Add Candidate
+                        Details</h2>
+                    <form action="/AddCandidate" enctype="multipart/form-data" method="POST" class="space-y-6">
+                        <div class="flex justify-center">
+                            <label
+                                class="group w-full sm:w-[28rem] h-64 flex flex-col items-center justify-center p-4 border-2 border-dashed border-gray-300 bg-white/30 backdrop-blur-sm rounded-2xl shadow-lg cursor-pointer transition hover:border-blue-400 hover:bg-white/40">
+                                <svg class="w-12 h-12 mb-4 text-gray-600 group-hover:text-blue-500 transition"
+                                    fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4" />
+                                </svg>
+                                <p class="text-gray-700 group-hover:text-blue-600 text-lg font-medium transition">
+                                    Click to upload resume (PDF / DOCX)
+                                </p>
+                                <input id="file-input" name="file" type="file" accept=".pdf,.docx" class="hidden"
+                                    required />
+                            </label>
+                        </div>
+                        <button id="submitBtn" type="submit"
+                                class="w-full py-3 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-lg shadow-md transition disabled:opacity-50"
+                                disabled>
+                                Get Summary
+                            </button>
+                    </form>
+
+                </div>
+            </div>
+
+
+            <div class="w-full h-full fixed top-0 left-0 bg-white opacity-75 z-50 hidden" id="Loading">
+                <div class="flex justify-center items-center mt-[50vh]">
+                    <svg aria-hidden="true"
+                        class="inline w-8 h-8 text-gray-200 animate-spin dark:text-gray-600 fill-blue-600"
+                        viewBox="0 0 100 101" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path
+                            d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z"
+                            fill="currentColor" />
+                        <path
+                            d="M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539C95.2932 28.8227 92.871 24.3692 89.8167 20.348C85.8452 15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 63.2754 1.94025 56.7698 1.05124C51.7666 0.367541 46.6976 0.446843 41.7345 1.27873C39.2613 1.69328 37.813 4.19778 38.4501 6.62326C39.0873 9.04874 41.5694 10.4717 44.0505 10.1071C47.8511 9.54855 51.7191 9.52689 55.5402 10.0491C60.8642 10.7766 65.9928 12.5457 70.6331 15.2552C75.2735 17.9648 79.3347 21.5619 82.5849 25.841C84.9175 28.9121 86.7997 32.2913 88.1811 35.8758C89.083 38.2158 91.5421 39.6781 93.9676 39.0409Z"
+                            fill="currentFill" />
+                    </svg>
+                    <span class="sr-only">Loading...</span>
+                </div>
+            </div>
+</body>
+
+</html>
+
+<script>
+    const form = document.querySelector('form')
+    const fileInput = document.getElementById('file-input')
+    const submitBtn = document.getElementById('submitBtn')
+
+    fileInput.addEventListener('change', () => {
+        submitBtn.disabled = !form.checkValidity()
+    })
+
+    form.addEventListener('submit', function (e) {
+        if (!form.checkValidity()) {
+            e.preventDefault()
+            showToast()
+        } else {
+            showLoader()
+        }
+    });
+
+    function display() {
+        const dropdown = document.getElementById('user-dropdown')
+        dropdown.classList.toggle('hidden')
+    }
+
+    function displayNotifaction() {
+        const dropdown = document.getElementById('notification-dropdown')
+        dropdown.classList.toggle('hidden')
+    }
+
+    function showLoader() {
+        document.getElementById("Loading").classList.remove("hidden");
+    }
+
+    function showToast() {
+        const toast = document.getElementById("toast-warning")
+        if (toast) {
+            toast.classList.remove("hidden")
+            setTimeout(() => toast.classList.add("hidden"), 3000)
+        }
+    }
+</script>

@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="en">
+
+
+<head>
+  <meta charset="UTF-8" />
+  <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+  <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4="
+    crossorigin="anonymous"></script>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Summary</title>
+</head>
+
+
+<style>
+  html,
+  body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden;
+  }
+
+  button {
+    cursor: pointer;
+  }
+</style>
+
+
+<body class="min-h-screen bg-gradient-to-br from-blue-600 via-blue-500 to-indigo-600 flex flex-col">
+  <nav class="bg-white border-gray-200">
+    <div class="flex items-center justify-between p-4">
+      <a href="HomePage">
+        <img class="h-16 w-auto" src="https://pbs.twimg.com/profile_images/1562414089460400130/4mOW-9q3_400x400.jpg"
+          alt="company logo" />
+      </a>
+
+
+      <div class="flex items-center space-x-6">
+        <div class="relative top-[-1.2rem] left-6">
+          <div class="absolute">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="36" height="36" fill="currentColor"
+              class="px-2" id="search-icon">
+              <path
+                d="M505 442.7L405.3 343c-4.5-4.5-10.6-7-17-7H372c27.6-35.3 44-79.7 44-128C416 93.1 322.9 0 208 0S0 93.1 0 208s93.1 208 208 208c48.3 0 92.7-16.4 128-44v16.3c0 6.4 2.5 12.5 7 17l99.7 99.7c9.4 9.4 24.6 9.4 33.9 0l28.3-28.3c9.4-9.4 9.4-24.6 .1-34zM208 336c-70.7 0-128-57.2-128-128 0-70.7 57.2-128 128-128 70.7 0 128 57.2 128 128 0 70.7-57.2 128-128 128z" />
+            </svg>
+          </div>
+        </div>
+
+
+        <input type="text" placeholder="Search..."
+          class="p-2 ps-8 text-sm border-2 border-gray-500 rounded bg-gray-100" />
+
+
+        <button id="displayNotifaction" class="focus:outline-none">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" width="30" height="30" fill="currentColor">
+            <path
+              d="M224 0c-17.7 0-32 14.3-32 32v19.2C119 66 64 130.6 64 208v18.8c0 47-17.3 92.4-48.5 127.6l-7.4 8.3c-8.4 9.4-10.4 22.9-5.3 34.4S19.4 416 32 416h384c12.6 0 24-7.4 29.2-18.9s3.1-25-5.3-34.4l-7.4-8.3C401.3 319.2 384 273.9 384 226.8v-18.8c0-77.4-55-142-128-156.8V32c0-17.7-14.3-32-32-32zm45.3 493.3c12-12 18.7-28.3 18.7-45.3H160c0 17 6.7 33.3 18.7 45.3s28.3 18.7 45.3 18.7 33.3-6.7 45.3-18.7z" />
+          </svg>
+        </button>
+
+
+        <button onclick="display()" class="focus:outline-none">
+          <img class="w-12 h-12 rounded-full" src="<%=imageUrl_user%>" alt="User avatar">
+        </button>
+      </div>
+    </div>
+
+
+    <div id="user-dropdown" class="absolute hidden bg-white right-4 mt-2 w-48 rounded-md shadow-lg z-[1]">
+      <div class="px-4 py-3">
+        <span class="block text-sm">
+          <%=name_user%>
+        </span>
+        <span class="block text-sm text-gray-500 truncate">
+          <%=email_user%>
+        </span>
+      </div>
+      <ul class="py-2">
+        <li><a href="profile" class="block px-4 py-2 hover:bg-gray-300">Profile</a></li>
+        <li><a href="Login" class="block px-4 py-2 hover:bg-gray-300">Sign out</a></li>
+      </ul>
+    </div>
+
+
+    <div id="notification-dropdown" class="absolute bg-white right-4 mt-2 w-48 rounded-md shadow-lg z-[1]">
+      <ul class="py-2">
+        <li>
+          <p class="block px-4 py-2">New User Added!</p>
+        </li>
+      </ul>
+    </div>
+  </nav>
+
+
+
+
+  <div class="max-w-3xl mx-auto mt-10 mb-16 bg-white rounded-3xl shadow-2xl p-10">
+
+    <div class="flex flex-col sm:flex-row items-center gap-6 mt-8">
+      <div class="shrink-0">
+        <img src="<%= profile_pic_url %>" alt="Profile Image"
+          class="w-40 h-40 rounded-full border-4 border-gray-300 shadow-md" />
+      </div>
+
+      <div>
+        <h3 class="text-2xl font-semibold text-gray-800">
+          <%= summary.name %>
+        </h3>
+        <p class="text-gray-600 text-sm mt-1">
+          <%= summary.occupation %>
+        </p>
+
+
+        <% if (summary.bio && summary.bio.length> 0) { %>
+          <p class="text-gray-700 mt-4 leading-relaxed">
+            <% summary.bio.forEach(line=> { %>
+              🔹 <%= line %><br />
+                <% }) %>
+          </p>
+          <% } %>
+      </div>
+    </div>
+
+
+    <div class="mt-10 text-gray-800 text-lg leading-relaxed space-y-4 px-2">
+
+
+      <% if (summary.experience?.length) { %>
+        <p> <strong>Experience:</strong>
+        <ul class="list-disc pl-6">
+          <% summary.experience.forEach(item=> { %>
+            <li>
+              <%= item %>
+            </li>
+            <% }) %>
+        </ul>
+        </p>
+        <% } %>
+
+
+          <% if (summary.projects?.length) { %>
+            <p> <strong>Projects:</strong>
+            <ul class="list-disc pl-6">
+              <% summary.projects.forEach(item=> { %>
+                <li>
+                  <%= item %>
+                </li>
+                <% }) %>
+            </ul>
+            </p>
+            <% } %>
+
+
+              <% if (summary.skills && Object.keys(summary.skills).length> 0) { %>
+                <p><strong>Skills and Endorsements:</strong></p>
+                <ul>
+                  <% Object.entries(summary.skills).forEach(function([skill, value]) { %>
+                    <li>
+                      <%= skill %>
+                        <% if (value) { %>
+                          (<%= value %>)
+                            <% } %>
+                    </li>
+                    <% }); %>
+                </ul>
+                <% } %>
+
+
+
+
+                  <% if (summary.education?.length) { %>
+                    <p><strong>Education:</strong>
+                    <ul class="list-disc pl-6">
+                      <% summary.education.forEach(item=> { %>
+                        <li>
+                          <%= item %>
+                        </li>
+                        <% }) %>
+                    </ul>
+                    </p>
+                    <% } %>
+
+
+                      <% if (summary.certifications?.length) { %>
+                        <p><strong>Certifications:</strong>
+                        <ul class="list-disc pl-6">
+                          <% summary.certifications.forEach(item=> { %>
+                            <li>
+                              <%= item %>
+                            </li>
+                            <% }) %>
+                        </ul>
+                        </p>
+                        <% } %>
+
+
+                          <% if (summary.achievements?.length) { %>
+                            <p><strong>Achievements:</strong>
+                            <ul class="list-disc pl-6">
+                              <% summary.achievements.forEach(item=> { %>
+                                <li>
+                                  <%= item %>
+                                </li>
+                                <% }) %>
+                            </ul>
+                            </p>
+                            <% } %>
+
+
+                              <% if (summary.interests?.length) { %>
+                                <p><strong>Interests:</strong>
+                                  <%= summary.interests.join(", ") %></p>
+ <% } %>
+
+
+ <% if (summary.recommendations?.length) { %>
+   <p><strong>Recommendations:</strong>
+     <ul class=" list-disc pl-6">
+                                    <% summary.recommendations.forEach(item=> { %>
+                                      <li>
+                                        <%= item %>
+                                      </li>
+                                      <% }) %>
+                                        </ul>
+                                </p>
+                                <% } %>
+
+
+                                  <% if (summary.volunteer?.length) { %>
+                                    <p><strong>Volunteer Work:</strong>
+                                    <ul class="list-disc pl-6">
+                                      <% summary.volunteer.forEach(item=> { %>
+                                        <li>
+                                          <%= item %>
+                                        </li>
+                                        <% }) %>
+                                    </ul>
+                                    </p>
+                                    <% } %>
+
+
+    </div>
+
+
+  </div>
+
+</body>
+
+</html>
+
+<script>
+  function display() {
+    const dropdown = document.getElementById('user-dropdown')
+    dropdown.classList.toggle('hidden')
+  }
+
+
+  $(function () {
+    setTimeout(function () {
+      $("#notification-dropdown").fadeOut(1500)
+    }, 2000)
+  })
+
+
+  $("#displayNotifaction").click(function () {
+    $("#notification-dropdown").toggle()
+  })
+</script>

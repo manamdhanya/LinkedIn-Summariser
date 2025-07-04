@@ -1,0 +1,36 @@
+{
+  "name": "linkedin_summariser",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon app.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@aws-sdk/client-s3": "^3.837.0",
+    "@aws-sdk/lib-dynamodb": "^3.839.0",
+    "@aws-sdk/lib-storage": "^3.837.0",
+    "@google/genai": "^1.5.1",
+    "axios": "^1.10.0",
+    "cookie-parser": "^1.4.7",
+    "cors": "^2.8.5",
+    "dotenv": "^17.0.1",
+    "ejs": "^3.1.10",
+    "express": "^5.1.0",
+    "express-session": "^1.18.1",
+    "formidable": "^3.5.4",
+    "jsonwebtoken": "^9.0.2",
+    "mammoth": "^1.9.1",
+    "mime-types": "^3.0.1",
+    "mongodb": "^6.17.0",
+    "mongoose": "^8.16.0",
+    "node": "^24.2.0",
+    "nodemon": "^3.1.10",
+    "pdf-parse": "^1.1.1",
+    "uuid": "^11.1.0"
+  }
+}
