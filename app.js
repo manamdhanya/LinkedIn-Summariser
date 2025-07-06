@@ -23,6 +23,6 @@ app.set('view engine','ejs')
 
 app.use("/",userRoute)
 
-app.listen(5001,()=>{
+app.listen(5002,()=>{
     console.log('server is listening...')
 })
