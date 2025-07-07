@@ -2,7 +2,7 @@ const { MongoClient } = require('mongodb');
 
 const uri = process.env.mongoDB_uri_findCandidate 
 
-const dbName = "HR-Auth"; 
+const dbName = process.env.mongodb_name; 
 
 async function findAllCustomers() {
   const client = new MongoClient(uri);
