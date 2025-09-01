@@ -68,7 +68,7 @@ LinkedIn-Summariser/
 1. Open your browser and visit:
 
    ```
-   http://localhost:3000
+   http://localhost:5002
    ```
 2. Enter LinkedIn profile details
 3. Upload the resume document
