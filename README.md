@@ -1,4 +1,4 @@
-# LinkedIn Summariser
+# Resume Summariser
 
 A Node.js + Express web application that generates concise summaries of LinkedIn profiles.  
 The project is structured with controllers, routes, services, models, middleware and EJS views for a clean and modular design.
@@ -7,7 +7,7 @@ The project is structured with controllers, routes, services, models, middleware
 
 ## 🚀 Features
 
-- Summarises LinkedIn profile data into easy-to-read text  
+- Summarises profile data into easy-to-read text  
 - Follows MVC architecture (Models, Views, Controllers)  
 - Uses **EJS templates** for rendering views  
 - Scalable project structure with separate service and middleware layers  
