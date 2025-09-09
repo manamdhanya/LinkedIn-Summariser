@@ -70,6 +70,6 @@ LinkedIn-Summariser/
    ```
    http://localhost:5002
    ```
-2. Enter LinkedIn profile details
+2. Enter profile details
 3. Upload the resume document
 4. Get a summarised output of the profile
